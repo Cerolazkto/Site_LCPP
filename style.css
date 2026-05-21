@@ -174,10 +174,6 @@ html {
 .section-header { margin-bottom: 60px; }
 .section-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
 
-.portfolio .section-header {
-    text-align: left;
-    margin-left: 375px;
-}
 
 .card-grid {
     display: grid;
@@ -456,4 +452,77 @@ tbody tr:hover {
     line-height: 1.4;
     padding-left: 8px;
     border-left: 4px solid var(--azul-royal);
+}
+
+/* --- SEÇÃO DE CONTATO --- */
+.contact-section {
+    padding: 100px 0;
+    background: var(--white);
+}
+
+.contact-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--azul-claro);
+    padding: 40px;
+    border-radius: 16px;
+    border: 1px solid rgba(30, 111, 191, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--preto-lcpp);
+    font-size: 0.9rem;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: var(--transition);
+    outline: none;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--azul-royal);
+    box-shadow: 0 0 0 3px rgba(30, 111, 191, 0.2);
+}
+
+.form-group input.input-error, 
+.form-group textarea.input-error {
+    border-color: #d93025;
+}
+
+.error-msg {
+    color: #d93025;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+    min-height: 18px; /* Evita que o layout "pule" quando o erro aparece */
+}
+
+.success-msg {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #d4edda;
+    color: #155724;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    display: none; /* Oculto por padrão */
+}
+
+.success-msg.show {
+    display: block;
 }

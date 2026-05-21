@@ -127,4 +127,112 @@ document.addEventListener('DOMContentLoaded', () => {
             row.style.display = text.includes(filter) ? '' : 'none';
         });
     });
+
+    // 6. VALIDAÇÃO DO FORMULÁRIO DE CONTATO
+    const formContato = document.getElementById('formContato');
+
+    if (formContato) {
+        formContato.addEventListener('submit', function(evento) {
+            evento.preventDefault(); // Impede a página de recarregar
+            
+            let formularioValido = true;
+
+            // Captura dos campos
+            const nome = document.getElementById('nome');
+            const email = document.getElementById('email');
+            const mensagem = document.getElementById('mensagem');
+
+            // Função auxiliar para exibir erros
+            const mostrarErro = (input, mensagemDeErro) => {
+                const spanErro = document.getElementById(`${input.id}Error`);
+                spanErro.textContent = mensagemDeErro;
+                input.classList.add('input-error');
+                formularioValido = false;
+            };
+
+            // Função auxiliar para limpar os erros
+            const limparErro = (input) => {
+                const spanErro = document.getElementById(`${input.id}Error`);
+                spanErro.textContent = '';
+                input.classList.remove('input-error');
+            };
+
+            // Reseta os erros a cada nova tentativa
+            [nome, email, mensagem].forEach(limparErro);
+
+            // 1. Validar Nome
+            if (nome.value.trim() === '') {
+                mostrarErro(nome, 'Por favor, informe seu nome completo.');
+            }
+
+            // 2. Validar E-mail com Regex
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email.value.trim() === '') {
+                mostrarErro(email, 'Por favor, informe seu e-mail.');
+            } else if (!regexEmail.test(email.value.trim())) {
+                mostrarErro(email, 'Informe um formato de e-mail válido.');
+            }
+
+            // 3. Validar Mensagem
+            if (mensagem.value.trim() === '') {
+                mostrarErro(mensagem, 'Por favor, escreva a sua mensagem.');
+            } else if (mensagem.value.trim().length < 15) {
+                mostrarErro(mensagem, 'Sua mensagem deve conter pelo menos 15 caracteres.');
+            }
+
+            // Se estiver tudo correto, simula o envio!
+            if (formularioValido) {
+                // 1. Prepara o botão para o estado de "A enviar..."
+                const botaoSubmit = formContato.querySelector('button[type="submit"]');
+                const textoOriginalBotao = botaoSubmit.textContent;
+                botaoSubmit.textContent = 'A enviar...';
+                botaoSubmit.disabled = true; // Previne duplo clique
+                botaoSubmit.style.opacity = '0.7';
+                botaoSubmit.style.cursor = 'not-allowed';
+
+                // 2. Prepara os dados do formulário
+                const formData = new FormData(formContato);
+
+                // 3. Faz o envio real para o Formspree
+                // SUBSTITUA O LINK ABAIXO PELO SEU ENDPOINT DO FORMSPREE
+                fetch('https://formspree.io/f/mgoqkrbk', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Sucesso no envio
+                        const msgSucesso = document.getElementById('msgSucesso');
+                        msgSucesso.classList.add('show');
+                        
+                        formContato.reset(); // Limpa os campos
+                        
+                        // Oculta a mensagem de sucesso após 5 segundos
+                        setTimeout(() => {
+                            msgSucesso.classList.remove('show');
+                        }, 5000);
+                    } else {
+                        // Erro retornado pelo servidor do Formspree
+                        alert('Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente mais tarde.');
+                    }
+                })
+                .catch(error => {
+                    // Erro de rede (falha na internet do utilizador, etc)
+                    alert('Erro de conexão. Verifique a sua internet e tente novamente.');
+                    console.error('Erro no fetch:', error);
+                })
+                .finally(() => {
+                    // 4. Restaura o botão ao estado original, independentemente de sucesso ou erro
+                    botaoSubmit.textContent = textoOriginalBotao;
+                    botaoSubmit.disabled = false;
+                    botaoSubmit.style.opacity = '1';
+                    botaoSubmit.style.cursor = 'pointer';
+                });
+            }
+        });
+    }
+
 });
