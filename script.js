@@ -115,4 +115,16 @@ document.addEventListener('DOMContentLoaded', () => {
             heroIcon.style.transform = `translateY(${value * 0.2}px) rotate(${value * 0.05}deg)`;
         }
     });
+
+    // Função para filtrar a tabela em tempo real com JavaScript Vanilla
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#portfolioTable tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            // Alterna a exibição com base na correspondência textual
+            row.style.display = text.includes(filter) ? '' : 'none';
+        });
+    });
 });

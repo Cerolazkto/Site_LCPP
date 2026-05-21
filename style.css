@@ -373,3 +373,97 @@ html {
 @media (max-width: 768px) {
     .grid-2 { grid-template-columns: 1fr; }
 }
+
+
+h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+p.subtitle {
+    font-size: 18px;
+    margin-bottom: 32px;
+    color: #444;
+    text-align: center;
+}
+
+
+.table-container {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+input#searchInput {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid var(--azul-royal);
+    border-radius: 8px;
+    font-family: var(--fonte-padrao);
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+}
+
+input#searchInput:focus {
+    box-shadow: 0 0 0 2px rgba(30, 111, 191, 0.2);
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+th {
+    background-color: var(--azul-royal);
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+th:first-child {
+    border-top-left-radius: 8px;
+}
+
+th:last-child {
+    border-top-right-radius: 8px;
+}
+
+td {
+    font-family: var(--fonte-mono);
+    font-size: 15px;
+    color: var(--preto-lcpp);
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--azul-claro);
+}
+
+tbody tr:hover {
+    background-color: #d8e8f8;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.observacao {
+    font-size: 14px;
+    margin-top: 20px;
+    font-style: normal;
+    color: #555;
+    line-height: 1.4;
+    padding-left: 8px;
+    border-left: 4px solid var(--azul-royal);
+}
