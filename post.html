@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carregando Artigo... | LCPP</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Importação do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* Estilos específicos para a página de leitura */
+        .post-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .post-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .post-title {
+            font-size: 2.5rem;
+            color: var(--preto-lcpp);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .post-meta {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+        .post-cover {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            background-color: var(--azul-claro);
+        }
+        .post-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        /* Estilização para o botão de voltar */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--azul-royal);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body style="background-color: var(--white); padding-top: 80px;">
+
+    <!-- NAVBAR (Igual ao index.html) -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="imgs/logo-lcpp.png.jpg" alt="LCPP Logo" style="height: 65px; width: auto;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="blog.html" class="active">Blog & Notícias</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="lang-btn">PT</button>
+                <button class="btn-primary" onclick="window.location.href='admin.html'">Área dos Membros</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ÁREA PRINCIPAL DO POST -->
+    <section class="post-section" style="padding-top: 40px; min-height: 70vh;">
+        <div class="post-container">
+            <a href="blog.html" class="back-link"><i data-lucide="arrow-left" style="width: 20px;"></i> Voltar para o Blog</a>
+            
+            <div id="postContentArea">
+                <div style="text-align: center; padding: 50px;">
+                    <i data-lucide="loader" style="animation: spin 2s linear infinite; margin-bottom: 10px;"></i>
+                    <p>Carregando artigo...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Igual ao index.html) -->
+    <footer class="footer mt-5">
+        <div class="container footer-grid">
+            <div>
+                <div class="logo white">LCPP</div>
+                <p>Excelência em pesquisa aplicada e desenvolvimento tecnológico.</p>
+            </div>
+            <div class="footer-copy">
+                © 2026 LCPP - Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="post.js"></script>
+</body>
+</html>

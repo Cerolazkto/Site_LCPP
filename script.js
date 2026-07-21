@@ -235,4 +235,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // CONFIGURAÇÃO DO SUPABASE
+    // Substitua pelas suas credenciais obtidas no painel do Supabase (Project Settings > API)
+    const SUPABASE_URL = 'https://sbernzrwccdmbwxelkls.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_ztZPPn2HJq3VDkfLXfFqEA_ijzadfIv';
+
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // BUSCAR E RENDERIZAR POSTS DO BLOG
+    async function carregarPostsBlog() {
+        const blogGrid = document.getElementById('blogGrid');
+        if (!blogGrid) return;
+
+        try {
+            const { data: posts, error } = await supabaseClient
+                .from('posts')
+                .select('*')
+                .eq('published', true)
+                .order('created_at', { ascending: false });
+
+            if (error) throw error;
+
+            if (!posts || posts.length === 0) {
+                blogGrid.innerHTML = '<p class="blog-loading">Nenhum artigo publicado no momento.</p>';
+                return;
+            }
+
+            blogGrid.innerHTML = posts.map(post => {
+                const dataFormatada = new Date(post.created_at).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+
+                const imagem = post.image_url || 'imgs/lab1.jpeg';
+
+                return `
+                    <article class="blog-card">
+                        <img src="${imagem}" alt="${post.title}" class="blog-card-img" />
+                        <div class="blog-card-content">
+                            <div class="blog-card-meta">${dataFormatada} • ${post.author}</div>
+                            <h3 class="blog-card-title">${post.title}</h3>
+                            <p class="blog-card-excerpt">${post.excerpt || ''}</p>
+                            <a href="post.html?slug=${post.slug}" class="btn-light" style="text-align: center; text-decoration: none;">Ler Artigo</a>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+
+        } catch (err) {
+            console.error('Erro ao carregar posts:', err);
+            blogGrid.innerHTML = '<p class="blog-loading">Erro ao carregar os artigos. Tente novamente mais tarde.</p>';
+        }
+    }
+
+    // Chamar a função após o DOM carregar
+    document.addEventListener('DOMContentLoaded', () => {
+        carregarPostsBlog();
+    });
+
 });

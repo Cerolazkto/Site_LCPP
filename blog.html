@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Notícias | LCPP</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Importação do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="background-color: var(--off-white); padding-top: 80px;">
+
+    <!-- NAVBAR (Igual ao index.html) -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="imgs/logo-lcpp.png.jpg" alt="LCPP Logo" style="height: 65px; width: auto;">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="index.html#sobre">Sobre</a></li>
+                <li><a href="index.html#pesquisa">Pesquisa</a></li>
+                <li><a href="index.html#portfolioTable">Portfólio</a></li>
+                <li><a href="blog.html" class="active">Blog & Notícias</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="lang-btn">PT</button>
+                <button class="btn-primary" onclick="window.location.href='admin.html'">Área dos Membros</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- CABEÇALHO DO BLOG -->
+    <section class="blog-section" style="padding-top: 60px; min-height: 70vh;">
+        <div class="container">
+            <div class="section-header text-center reveal">
+                <span class="category-tag">Atualizações</span>
+                <h2>Blog & Notícias Científicas</h2>
+                <p>Acompanhe nossas últimas pesquisas, publicações e novidades do laboratório.</p>
+            </div>
+
+            <!-- GRID DE POSTS (Será preenchido pelo JavaScript) -->
+            <div id="blogGrid" class="blog-grid reveal">
+                <div class="blog-loading">
+                    <i data-lucide="loader" style="animation: spin 2s linear infinite; margin-bottom: 10px;"></i>
+                    <p>Buscando artigos no banco de dados...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Igual ao index.html) -->
+    <footer class="footer mt-5">
+        <div class="container footer-grid">
+            <div>
+                <div class="logo white">LCPP</div>
+                <p>Excelência em pesquisa aplicada e desenvolvimento tecnológico.</p>
+            </div>
+            <div class="footer-copy">
+                © 2026 LCPP - Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts da página -->
+    <script src="script.js"></script>
+    <script src="blog.js"></script>
+</body>
+</html>

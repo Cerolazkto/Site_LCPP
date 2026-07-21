@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCPP - Administração do Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Importar o Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body style="background-color: var(--off-white); padding: 50px 0;">
+
+    <div class="container">
+        <div class="section-header text-center">
+            <h2>Área do Administrador</h2>
+            <p>Gerencie as publicações do Blog do LCPP.</p>
+        </div>
+
+        <!-- SESSÃO DE LOGIN (Aparece se não estiver logado) -->
+        <div id="loginSection" class="contact-wrapper" style="margin-bottom: 40px;">
+            <h3>Login Restrito</h3>
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" id="adminEmail" placeholder="admin@admin.com">
+            </div>
+            <div class="form-group">
+                <label>Senha</label>
+                <input type="password" id="adminPassword" placeholder="******">
+            </div>
+            <button onclick="fazerLogin()" class="btn-primary" style="width: 100%;">Entrar</button>
+        </div>
+
+        <!-- SESSÃO DO PAINEL (Aparece apenas quando logado) -->
+        <div id="dashboardSection" style="display: none;">
+            
+            <button onclick="fazerLogout()" class="btn-dark" style="margin-bottom: 30px;">Sair (Logout)</button>
+
+            <!-- FORMULÁRIO PARA CRIAR POST -->
+            <div class="contact-wrapper" style="margin-bottom: 40px;">
+                <h3>Criar Novo Post</h3>
+                <div class="form-group">
+                    <label>Título do Post *</label>
+                    <input type="text" id="postTitle">
+                </div>
+                <div class="form-group">
+                    <label>URL Amigável (Slug) * ex: novo-polimero-2026</label>
+                    <input type="text" id="postSlug">
+                </div>
+                <div class="form-group">
+                    <label>Resumo (Excerpt)</label>
+                    <textarea id="postExcerpt" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Conteúdo Completo *</label>
+                    <textarea id="postContent" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>URL da Imagem de Capa</label>
+                    <input type="text" id="postImage" placeholder="https://...">
+                </div>
+                <button onclick="criarPost()" class="btn-primary" style="width: 100%;">Publicar Artigo</button>
+            </div>
+
+            <!-- LISTA DE POSTS PARA DELETAR -->
+            <div class="contact-wrapper">
+                <h3>Posts Publicados (Deletar)</h3>
+                <ul id="adminPostList" style="list-style: none; padding: 0;">
+                    <!-- A lista será gerada pelo JS -->
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
