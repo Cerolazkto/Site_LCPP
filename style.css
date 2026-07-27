@@ -209,7 +209,16 @@ html {
 .footer {
     background: var(--preto-lcpp);
     color: rgba(255,255,255,0.5);
-    padding: 60px 0;
+    justify-content: space-between;
+    padding: 40px;
+}
+
+.coluna-sobre, .coluna-contato {
+  flex: 1; /* Faz as duas colunas dividirem o espaço igualmente */
+}
+
+.coluna-contato {
+  text-align: right; /* Alinha o texto do bloco da direita */
 }
 
 .footer .logo.white { color: white; margin-bottom: 20px; }
@@ -217,7 +226,7 @@ html {
 /* SEÇÃO SOBRE - MVV */
 .about-mvv { padding: 100px 0; background: var(--white); }
 
-.infra-map{background-color: #ffff; padding: 40px;}
+.infra-map{background-color: #ffff; padding: 60px;}
 
 .category-tag {
     color: var(--azul-royal);
@@ -600,7 +609,7 @@ tbody tr:hover {
 /* Container principal da faixa */
 .carrossel-parceiros {
   background-color: #f8f9fa; /* Cor de fundo da faixa */
-  padding: 20px 0;
+  padding: 60px 0;
   overflow: hidden; /* Esconde os logos que saem da tela */
   white-space: nowrap;
   position: relative;
