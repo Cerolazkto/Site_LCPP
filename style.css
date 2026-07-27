@@ -217,6 +217,8 @@ html {
 /* SEÇÃO SOBRE - MVV */
 .about-mvv { padding: 100px 0; background: var(--white); }
 
+.infra-map{background-color: #ffff; padding: 40px;}
+
 .category-tag {
     color: var(--azul-royal);
     text-transform: uppercase;
@@ -594,4 +596,56 @@ tbody tr:hover {
     grid-column: 1 / -1;
     color: #888;
     padding: 40px;
+}
+/* Container principal da faixa */
+.carrossel-parceiros {
+  background-color: #f8f9fa; /* Cor de fundo da faixa */
+  padding: 20px 0;
+  overflow: hidden; /* Esconde os logos que saem da tela */
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+}
+
+.carrossel-parceiros:hover .carrossel-track {
+  animation-play-state: paused;
+}
+
+/* Trilho que desliza */
+.carrossel-track {
+  display: flex;
+  width: calc(250px * 16); /* Largura aproximada do slide x total de itens */
+  animation: rolar 20s linear infinite; /* Animação contínua */
+}
+
+/* Estilo de cada slide/logo */
+.slide {
+  width: 250px;
+  margin: 0 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide img {
+  max-width: 100%;
+  max-height: 100px; /* Ajuste a altura máxima para alinhar todos os logos */
+  filter: grayscale(100%); /* Opcional: deixa os logos em P&B para padrão */
+  opacity: 0.7;
+  transition: all 0.3s ease;
+}
+
+.slide img:hover {
+  filter: grayscale(0%); /* Mostra a cor original ao passar o mouse */
+  opacity: 1;
+}
+
+/* Animação que faz o carrossel andar */
+@keyframes rolar {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Move metade do caminho para resetar sem solavancos */
+  }
 }
