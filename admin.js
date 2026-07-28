@@ -104,7 +104,7 @@ async function carregarListaDePosts() {
     }
 
     postList.innerHTML = posts.map(post => `
-        <li style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #ccc;">
+        <li class="admin-post-item" style="display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #ccc;">
             <span><strong>${post.title}</strong></span>
             <button onclick="deletarPost('${post.id}')" style="background: #d93025; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer;">
                 Deletar

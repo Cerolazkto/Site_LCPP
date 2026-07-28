@@ -2,6 +2,42 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar ícones do Lucide
     lucide.createIcons();
 
+    // MENU HAMBÚRGUER RESPONSIVO
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    const fecharMenu = () => {
+        if (!menuToggle || !navLinks) return;
+        menuToggle.classList.remove('is-open');
+        navLinks.classList.remove('is-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menu');
+    };
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const aberto = navLinks.classList.toggle('is-open');
+            menuToggle.classList.toggle('is-open', aberto);
+            menuToggle.setAttribute('aria-expanded', String(aberto));
+            menuToggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', fecharMenu);
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                fecharMenu();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) fecharMenu();
+        });
+    }
+
     // 1. EFEITO DE CONTADOR ANIMADO
     const counters = document.querySelectorAll('.counter');
     const speed = 200;
@@ -110,23 +146,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // 5. EFEITO PARALLAX NA GOTA
     window.addEventListener('scroll', () => {
         const heroIcon = document.querySelector('.hero-bg-icon');
-        if (heroIcon) {
+        if (heroIcon && window.innerWidth > 768) {
             let value = window.scrollY;
             heroIcon.style.transform = `translateY(${value * 0.2}px) rotate(${value * 0.05}deg)`;
         }
     });
 
     // Função para filtrar a tabela em tempo real com JavaScript Vanilla
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        const filter = this.value.toLowerCase();
-        const rows = document.querySelectorAll('#portfolioTable tbody tr');
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            const filter = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#portfolioTable tbody tr');
 
-        rows.forEach(row => {
-            const text = row.textContent.toLowerCase();
-            // Alterna a exibição com base na correspondência textual
-            row.style.display = text.includes(filter) ? '' : 'none';
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
         });
-    });
+    }
 
     // 6. VALIDAÇÃO DO FORMULÁRIO DE CONTATO
     const formContato = document.getElementById('formContato');
