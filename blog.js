@@ -1,8 +1,6 @@
-// Substitua pelas suas credenciais reais do Supabase
-const SUPABASE_URL = 'https://sbernzrwccdmbwxelkls.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_ztZPPn2HJq3VDkfLXfFqEA_ijzadfIv';
-
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// ============================================
+// Listagem do Blog & Notícias Científicas | LCPP
+// ============================================
 
 // Função assíncrona para buscar e renderizar os posts
 async function carregarPostsBlog() {
@@ -22,12 +20,12 @@ async function carregarPostsBlog() {
         // Verifica se o banco está vazio
         if (!posts || posts.length === 0) {
             blogGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 50px 0;">
-                    <i data-lucide="inbox" style="width: 48px; height: 48px; color: #ccc; margin-bottom: 15px;"></i>
-                    <h3 style="color: #666;">Nenhum artigo publicado ainda.</h3>
-                    <p style="color: #999;">Volte em breve para conferir nossas novidades.</p>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 0;">
+                    <i data-lucide="inbox" style="width: 52px; height: 52px; color: #cbd5e1; margin-bottom: 15px;"></i>
+                    <h3 style="color: #475569; margin-bottom: 8px;">Nenhum artigo publicado ainda.</h3>
+                    <p style="color: #94a3b8;">Volte em breve para conferir nossas pesquisas e novidades.</p>
                 </div>`;
-            lucide.createIcons(); // Recarrega os ícones
+            lucide.createIcons();
             return;
         }
 
@@ -47,7 +45,7 @@ async function carregarPostsBlog() {
                 <article class="blog-card">
                     <img src="${imagem}" alt="${post.title}" class="blog-card-img" />
                     <div class="blog-card-content">
-                        <div class="blog-card-meta">${dataFormatada} • ${post.author}</div>
+                        <div class="blog-card-meta">${dataFormatada} • ${post.author || 'LCPP'}</div>
                         <h3 class="blog-card-title">${post.title}</h3>
                         <p class="blog-card-excerpt">${post.excerpt || 'Clique em ler artigo para ver o conteúdo completo.'}</p>
                         <a href="post.html?slug=${post.slug}" class="btn-light" style="text-align: center; text-decoration: none; margin-top: auto;">Ler Artigo</a>
@@ -55,6 +53,8 @@ async function carregarPostsBlog() {
                 </article>
             `;
         }).join('');
+
+        lucide.createIcons();
 
     } catch (err) {
         console.error('Erro ao conectar com o Supabase:', err);

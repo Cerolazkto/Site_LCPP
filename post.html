@@ -6,45 +6,47 @@
     <title>Carregando Artigo... | LCPP</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
     <!-- Importação do Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
         /* Estilos específicos para a página de leitura */
         .post-container {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 20px 80px;
         }
         .post-header {
             margin-bottom: 30px;
             text-align: center;
         }
         .post-title {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 5vw, 2.75rem);
             color: var(--preto-lcpp);
             margin-bottom: 15px;
-            line-height: 1.2;
+            line-height: 1.25;
+            font-weight: 800;
         }
         .post-meta {
             color: #666;
             font-size: 0.95rem;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
         }
         .post-cover {
             width: 100%;
-            max-height: 400px;
+            max-height: 440px;
             object-fit: cover;
             border-radius: 16px;
             margin-bottom: 40px;
             background-color: var(--azul-claro);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
-        .post-body {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #333;
-        }
-        /* Estilização para o botão de voltar */
         .back-link {
             display: inline-flex;
             align-items: center;
@@ -52,8 +54,9 @@
             color: var(--azul-royal);
             text-decoration: none;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             transition: var(--transition);
+            font-size: 0.95rem;
         }
         .back-link:hover {
             transform: translateX(-5px);
@@ -62,7 +65,7 @@
 </head>
 <body style="background-color: var(--white); padding-top: 80px;">
 
-    <!-- NAVBAR (Igual ao index.html) -->
+    <!-- NAVBAR PADRÃO -->
     <nav class="navbar">
         <div class="container nav-content">
             <div class="logo">
@@ -85,20 +88,22 @@
     </nav>
 
     <!-- ÁREA PRINCIPAL DO POST -->
-    <section class="post-section" style="padding-top: 40px; min-height: 70vh;">
+    <section class="post-section" style="padding-top: 20px; min-height: 75vh;">
         <div class="post-container">
-            <a href="blog.html" class="back-link"><i data-lucide="arrow-left" style="width: 20px;"></i> Voltar para o Blog</a>
+            <a href="blog.html" class="back-link">
+                <i data-lucide="arrow-left" style="width: 20px;"></i> Voltar para o Blog
+            </a>
             
             <div id="postContentArea">
-                <div style="text-align: center; padding: 50px;">
-                    <i data-lucide="loader" style="animation: spin 2s linear infinite; margin-bottom: 10px;"></i>
-                    <p>Carregando artigo...</p>
+                <div style="text-align: center; padding: 60px 0;">
+                    <i data-lucide="loader" style="animation: spin 2s linear infinite; margin-bottom: 12px; width: 36px; height: 36px; color: var(--azul-royal);"></i>
+                    <p style="color: #666; font-size: 1.05rem;">Carregando artigo...</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER (Igual ao index.html) -->
+    <!-- FOOTER PADRÃO -->
     <footer class="footer mt-5">
         <div class="container footer-grid">
             <div>
@@ -111,8 +116,9 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts da Aplicação -->
     <script src="script.js"></script>
+    <script src="supabase-config.js"></script>
     <script src="post.js"></script>
 </body>
 </html>

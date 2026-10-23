@@ -3,67 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCPP - Administração do Blog</title>
+    <title>Painel do Blog | LCPP</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Importar o Supabase -->
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Quill Rich Text Editor CSS -->
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body style="background-color: var(--off-white); padding: 50px 0;">
+<body style="background-color: var(--off-white); padding-top: 80px;">
 
-    <div class="container">
-        <div class="section-header text-center">
+    <!-- NAVBAR PADRÃO LCPP -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="imgs/logo-lcpp.png.jpg" alt="LCPP Logo" style="height: 65px; width: auto;">
+                </a>
+            </div>
+            <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="blog.html">Blog & Notícias</a></li>
+                <li><a href="admin.html" class="active">Painel Admin</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="blog.html" class="btn-light" style="text-decoration: none; padding: 10px 18px; border-radius: 8px;">Ver Blog</a>
+                <button id="navLogoutBtn" onclick="fazerLogout()" class="btn-dark" style="display: none; padding: 10px 18px; border-radius: 8px;">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 900px; padding: 40px 20px;">
+        
+        <div class="section-header text-center" style="margin-bottom: 35px;">
+            <span class="category-tag">Gerenciamento</span>
             <h2>Área do Administrador</h2>
-            <p>Gerencie as publicações do Blog do LCPP.</p>
+            <p>Gerencie publicações, imagens e conteúdos com o editor do laboratório.</p>
         </div>
 
         <!-- SESSÃO DE LOGIN (Aparece se não estiver logado) -->
-        <div id="loginSection" class="contact-wrapper" style="margin-bottom: 40px;">
-            <h3>Login Restrito</h3>
-            <div class="form-group">
-                <label>E-mail</label>
-                <input type="email" id="adminEmail" placeholder="admin@admin.com">
+        <div id="loginSection" class="contact-wrapper" style="margin: 0 auto 40px; max-width: 480px; box-shadow: 0 10px 30px rgba(0,0,0,0.06);">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <div style="width: 50px; height: 50px; background: var(--azul-claro); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--azul-royal); margin-bottom: 10px;">
+                    <i data-lucide="lock" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h3>Acesso Restrito</h3>
+                <p style="color: #666; font-size: 0.9rem;">Entre com suas credenciais para publicar artigos.</p>
             </div>
-            <div class="form-group">
-                <label>Senha</label>
-                <input type="password" id="adminPassword" placeholder="******">
-            </div>
-            <button onclick="fazerLogin()" class="btn-primary" style="width: 100%;">Entrar</button>
+            
+            <form onsubmit="event.preventDefault(); fazerLogin();">
+                <div class="form-group">
+                    <label for="adminEmail">E-mail</label>
+                    <input type="email" id="adminEmail" placeholder="ex: lcppufs@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Senha</label>
+                    <input type="password" id="adminPassword" placeholder="Sua senha de acesso" required>
+                </div>
+                <button type="submit" id="btnLoginSubmit" class="btn-primary" style="width: 100%; margin-top: 10px;">
+                    Entrar no Painel
+                </button>
+            </form>
         </div>
 
         <!-- SESSÃO DO PAINEL (Aparece apenas quando logado) -->
         <div id="dashboardSection" style="display: none;">
             
-            <button onclick="fazerLogout()" class="btn-dark" style="margin-bottom: 30px;">Sair (Logout)</button>
-
-            <!-- FORMULÁRIO PARA CRIAR POST -->
-            <div class="contact-wrapper" style="margin-bottom: 40px;">
-                <h3>Criar Novo Post</h3>
-                <div class="form-group">
-                    <label>Título do Post *</label>
-                    <input type="text" id="postTitle">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 18px 24px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(30, 111, 191, 0.12); box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                <div>
+                    <span style="font-size: 0.85rem; color: #666;">Conectado como</span>
+                    <strong id="loggedUserEmail" style="display: block; color: var(--preto-lcpp); font-size: 1rem;">admin</strong>
                 </div>
-                <div class="form-group">
-                    <label>URL Amigável (Slug) * ex: novo-polimero-2026</label>
-                    <input type="text" id="postSlug">
-                </div>
-                <div class="form-group">
-                    <label>Resumo (Excerpt)</label>
-                    <textarea id="postExcerpt" rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Conteúdo Completo *</label>
-                    <textarea id="postContent" rows="5"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>URL da Imagem de Capa</label>
-                    <input type="text" id="postImage" placeholder="https://...">
-                </div>
-                <button onclick="criarPost()" class="btn-primary" style="width: 100%;">Publicar Artigo</button>
+                <button onclick="fazerLogout()" class="btn-dark" style="padding: 10px 20px; font-size: 0.9rem;">
+                    Sair (Logout)
+                </button>
             </div>
 
-            <!-- LISTA DE POSTS PARA DELETAR -->
-            <div class="contact-wrapper">
-                <h3>Posts Publicados (Deletar)</h3>
+            <!-- FORMULÁRIO PARA CRIAR NOVO POST -->
+            <div class="contact-wrapper" style="margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+                <div style="border-bottom: 1px solid #edf2f7; padding-bottom: 18px; margin-bottom: 25px;">
+                    <h3 style="font-size: 1.4rem; color: var(--preto-lcpp); display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="file-plus" style="color: var(--azul-royal);"></i>
+                        Criar Novo Artigo
+                    </h3>
+                    <p style="color: #666; font-size: 0.9rem; margin-top: 4px;">Preencha os campos abaixo e use a barra de ferramentas para formatar o texto completo.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="postTitle">Título do Post *</label>
+                    <input type="text" id="postTitle" placeholder="Ex: Novo catalisador sustentável para petróleo" required>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label for="postSlug">URL Amigável (Slug) *</label>
+                        <input type="text" id="postSlug" placeholder="ex: novo-catalisador-sustentavel" required>
+                        <small style="color: #888; font-size: 0.78rem;">Gerado automaticamente a partir do título.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="postAuthor">Autor</label>
+                        <input type="text" id="postAuthor" placeholder="LCPP ou nome do pesquisador" value="LCPP">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="postExcerpt">Resumo Curto (Excerpt)</label>
+                    <textarea id="postExcerpt" rows="2" placeholder="Breve resumo que será exibido no card de listagem do blog..."></textarea>
+                </div>
+
+                <!-- SELEÇÃO DE IMAGEM DE CAPA COM SUPABASE STORAGE -->
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label style="display: block; margin-bottom: 8px;">Imagem de Capa do Artigo</label>
+                    
+                    <div class="image-source-tabs">
+                        <button type="button" class="image-tab-btn active" id="tabUploadBtn" onclick="alternarAbaImagem('upload')">
+                            <i data-lucide="upload-cloud" style="width: 16px; height: 16px;"></i> Enviar Imagem (Storage)
+                        </button>
+                        <button type="button" class="image-tab-btn" id="tabUrlBtn" onclick="alternarAbaImagem('url')">
+                            <i data-lucide="link" style="width: 16px; height: 16px;"></i> Usar Link / URL
+                        </button>
+                    </div>
+
+                    <!-- Modo 1: Upload direto (Supabase Storage) -->
+                    <div id="imageUploadMode">
+                        <div class="image-dropzone" id="dropzoneArea">
+                            <input type="file" id="postImageFile" accept="image/png, image/jpeg, image/webp, image/gif" onchange="selecionarArquivoImagem(this)">
+                            <div class="image-dropzone-icon">
+                                <i data-lucide="image" style="width: 38px; height: 38px;"></i>
+                            </div>
+                            <div class="image-dropzone-text">Clique para escolher ou arraste uma imagem aqui</div>
+                            <div class="image-dropzone-subtext">JPG, PNG, WEBP ou GIF (Recomendado: 1200x630px até 5MB)</div>
+                        </div>
+
+                        <!-- Preview da Imagem Selecionada -->
+                        <div class="image-preview-container" id="imagePreviewContainer">
+                            <img id="imagePreviewEl" src="" alt="Prévia da capa">
+                            <div class="image-preview-info">
+                                <span id="imageFileName" style="font-weight: 500; color: #4b5563;"></span>
+                                <button type="button" class="btn-remove-image" onclick="removerImagemSelecionada()">
+                                    <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i> Remover
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modo 2: URL Externa -->
+                    <div id="imageUrlMode" style="display: none;">
+                        <input type="url" id="postImage" placeholder="https://exemplo.com/imagem.jpg" oninput="atualizarPreviewPorUrl(this.value)">
+                        <small style="color: #888; font-size: 0.78rem;">Cole a URL pública de uma imagem hospedada na web.</small>
+                    </div>
+                </div>
+
+                <!-- EDITOR DE CONTEÚDO RICO (QUILL) -->
+                <div class="form-group" style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 8px;">Conteúdo Completo do Artigo *</label>
+                    <div class="quill-wrapper">
+                        <div id="quillEditor"></div>
+                    </div>
+                    <small style="color: #888; font-size: 0.78rem; margin-top: 6px; display: block;">
+                        Dica: use a barra de ferramentas para criar subtítulos (H2/H3), negrito, listas e citações para enriquecer o texto.
+                    </small>
+                </div>
+
+                <button id="btnPublicar" onclick="criarPost()" class="btn-primary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 1.05rem;">
+                    <i data-lucide="send" style="width: 18px; height: 18px;"></i>
+                    <span id="btnPublicarTexto">Publicar Artigo</span>
+                </button>
+            </div>
+
+            <!-- LISTA DE POSTS PUBLICADOS -->
+            <div class="contact-wrapper" style="box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
+                <div style="border-bottom: 1px solid #edf2f7; padding-bottom: 15px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-size: 1.3rem; color: var(--preto-lcpp); display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="layers" style="color: var(--azul-royal);"></i>
+                        Artigos Publicados
+                    </h3>
+                    <span id="postsCountBadge" style="background: var(--azul-claro); color: var(--azul-royal); font-weight: 700; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">
+                        Carregando...
+                    </span>
+                </div>
+                
                 <ul id="adminPostList" style="list-style: none; padding: 0;">
                     <!-- A lista será gerada pelo JS -->
                 </ul>
@@ -72,6 +199,12 @@
         </div>
     </div>
 
+    <!-- Quill Rich Text Editor JS -->
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+    
+    <!-- Scripts da Aplicação -->
+    <script src="script.js"></script>
+    <script src="supabase-config.js"></script>
     <script src="admin.js"></script>
 </body>
 </html>
