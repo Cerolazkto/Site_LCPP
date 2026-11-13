@@ -1133,3 +1133,57 @@ textarea {
     border-radius: 4px;
     font-size: 0.9em;
 }
+
+
+/* =========================================================
+   LINKS SOCIAIS DOS MEMBROS (LinkedIn & Lattes)
+   ========================================================= */
+
+.member-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.member-social {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.member-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--azul-claro);
+    color: var(--azul-royal);
+    text-decoration: none;
+    transition: var(--transition);
+    border: 1px solid rgba(30, 111, 191, 0.15);
+    flex-shrink: 0;
+}
+
+.member-social a:hover {
+    background: var(--azul-royal);
+    color: white;
+    border-color: var(--azul-royal);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 111, 191, 0.25);
+}
+
+.member-social a svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
+.member-social a .lattes-icon {
+    font-weight: 800;
+    font-size: 11px;
+    line-height: 1;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -0.5px;
+}
